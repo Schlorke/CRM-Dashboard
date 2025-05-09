@@ -1,0 +1,640 @@
+:root {
+  /* Core colors */
+  --color-primary-start: #4b6cb7;
+  --color-primary-end: #182848;
+  --color-accent: #ff7f50;
+  --bg-light: #f7f9fc;
+  --bg-dark: #1e1e2f;
+  --text-light: #ffffff;
+  --text-dark: #11141a;
+
+  /* Typography */
+  --font-base: "Poppins", sans-serif;
+  --font-title: "Merriweather", serif;
+
+  /* UI tokens */
+  --radius: 0.75rem;
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --transition-fast: 0.2s ease-out;
+  --transition-medium: 0.4s ease-out;
+}
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 100%;
+}
+body {
+  font-family: var(--font-base);
+  background: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+  transition: background var(--transition-medium),
+    color var(--transition-medium);
+}
+.crm-root {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Fixed Navbar */
+.nav {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary-start),
+    var(--color-primary-end)
+  );
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  z-index: 1000;
+}
+.nav__hamburger {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+}
+.nav__toggle-dark {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+/* Main Menu List (now outside <nav>) */
+.nav__list {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+.nav__item {
+  color: var(--text-light);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  position: relative;
+  transition: color var(--transition-fast);
+}
+.nav__item:hover,
+.nav__item.active {
+  color: var(--color-accent);
+}
+.nav__item::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  bottom: 2px;
+  left: 25%;
+  width: 50%;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--transition-fast);
+}
+.nav__item:hover::after,
+.nav__item.active::after {
+  transform: scaleX(1);
+}
+
+/* Offset content for fixed nav */
+.content {
+  padding-top: 4rem; /* equal to nav height + margin */
+}
+
+/* Dark mode overrides */
+body.dark-mode {
+  background: var(--bg-dark);
+  color: var(--text-light);
+}
+
+body.dark-mode .nav {
+  background: linear-gradient(90deg, #2a2a3c, #1e1e2f);
+}
+
+body.dark-mode .section,
+body.dark-mode .kpi-card,
+body.dark-mode .kanban__card,
+body.dark-mode .tasks-list li,
+body.dark-mode .timeline-list li {
+  background: #2a2a3c;
+  color: var(--text-light);
+}
+
+body.dark-mode .table th,
+body.dark-mode .table td {
+  border-color: #444;
+}
+
+body.dark-mode .button {
+  background: var(--color-accent);
+  color: var(--text-light);
+}
+
+/* 1) Títulos de seção (h2.section__title) em branco */
+body.dark-mode .section__title {
+  color: var(--text-light);
+}
+
+/* 2) Título do modal */
+body.dark-mode .modal-content h3 {
+  color: var(--text-light);
+}
+
+/* 3) Fundo e texto de tabelas */
+body.dark-mode .table th {
+  background: #3a3a4e;
+  color: var(--text-light);
+}
+body.dark-mode .table td {
+  background: #2a2a3c;
+  color: var(--text-light);
+}
+body.dark-mode .table tr:hover td {
+  background: #3a3a4e;
+}
+
+/* 4) Campos de formulário (inputs, selects e textarea) */
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background: #2a2a3c;
+  color: var(--text-light);
+  border: 1px solid #444;
+}
+body.dark-mode ::placeholder {
+  color: #aaa;
+}
+
+/* 5) Paginação */
+body.dark-mode .pagination .button {
+  background: #2a2a3c;
+  color: var(--text-light);
+  border-color: #444;
+}
+body.dark-mode .pagination .button.active {
+  background: var(--color-accent);
+  color: var(--text-light);
+  border-color: var(--color-accent);
+}
+
+/* 6) Modal geral */
+body.dark-mode .modal-content {
+  background: #2a2a3c;
+  color: var(--text-light);
+}
+
+/* Dark Mode Toggle Button */
+#dark-mode-toggle {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: background var(--transition-fast);
+}
+#dark-mode-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+body.dark-mode #dark-mode-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 7) Pipeline de Oportunidades */
+body.dark-mode .kanban__column {
+  background: #2a2a3c; /* fundo escuro */
+  border: 1px solid #444; /* contorno suave */
+}
+body.dark-mode .kanban__column h3 {
+  color: var(--text-light); /* títulos das colunas */
+}
+body.dark-mode .kanban__card {
+  background: #3a3a4e; /* cartão escuro */
+  color: var(--text-light);
+  border: none;
+}
+
+/* → Removido o bloco de .chart-container para NÃO alterar o fundo dos <canvas> */
+
+/* Mobile Menu at 1334px */
+@media (max-width: 1334px) {
+  /* show hamburger toggle */
+  .nav__hamburger {
+    display: block;
+  }
+  /* hide main menu by default */
+  .nav__list {
+    position: absolute;
+    top: calc(100% - 8px); /* pull up to hide nav corners */
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    background: #818181; /* solid white */
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+    overflow: hidden;
+    align-items: flex-start;
+    z-index: 999; /* under nav (1000) */
+  }
+  /* open state */
+  .nav__list.open {
+    display: flex;
+  }
+  /* contrast text when open */
+  .nav__list.open .nav__item {
+    color: var(--text-light);
+  }
+  .nav__list.open .nav__item:hover,
+  .nav__list.open .nav__item.active {
+    color: var(--color-accent);
+  }
+  .nav__list.open .nav__toggle-dark {
+    color: var(--text-dark);
+  }
+  /* larger touch area */
+  .nav__item {
+    padding: 1rem 1.5rem;
+  }
+  /* closer underline */
+  .nav__item::after {
+    bottom: 4px;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+  }
+}
+
+/* Table Controls (Leads/Contatos) */
+.table-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Form Controls (Configurações) */
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Sections */
+.section {
+  display: none;
+  margin-top: 1.5rem;
+  padding: 2rem;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+.section.active {
+  display: block;
+  animation: fadeInUp 0.3s ease-out both;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.section__title {
+  font-family: var(--font-title);
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  margin-bottom: 1rem;
+  color: var(--color-primary-start);
+}
+
+/* KPI Cards */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.kpi-card {
+  padding: 1.5rem;
+  text-align: center;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-fast);
+}
+.kpi-card:hover {
+  transform: translateY(-5px);
+}
+.kpi-card__title {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.kpi-card__value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  color: var(--color-accent);
+}
+
+/* Charts */
+.charts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.chart-container {
+  flex: 1 1 300px;
+  height: 250px;
+  position: relative;
+}
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Tables */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1rem 0;
+}
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+.table th {
+  background: #f1f1f1;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.table tr:hover td {
+  background: #f9f9f9;
+}
+
+/* Inputs & Buttons */
+.input {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+  transition: border-color var(--transition-fast);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+.button {
+  padding: 0.6rem 1.2rem;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition-fast),
+    transform var(--transition-fast);
+}
+.button:hover {
+  background: #e76b44;
+  transform: translateY(-2px);
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.pagination .button {
+  background: #fff;
+  border: 1px solid #ccc;
+}
+.pagination .button.active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+/* Kanban */
+.pipeline-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+.kanban {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.kanban__column {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  max-height: 600px;
+  overflow-y: auto;
+}
+.kanban__column h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+.kanban__card {
+  background: #fafafa;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-radius: var(--radius);
+  cursor: grab;
+  transition: transform var(--transition-fast);
+}
+.kanban__card:active {
+  transform: scale(1.02);
+}
+
+/* Tasks & Timeline */
+.tasks-list,
+.timeline-list {
+  list-style: none;
+  margin-top: 1rem;
+}
+.tasks-list li,
+.timeline-list li {
+  background: #fff;
+  padding: 1rem;
+  border-radius: var(--radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  box-shadow: var(--shadow-card);
+}
+
+/* Reports */
+.report-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+}
+.modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: var(--radius);
+  max-width: 500px;
+  width: 100%;
+  transform: translateY(-20px);
+  transition: transform var(--transition-fast);
+}
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Toasts */
+.toast-container {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 2000;
+}
+/* ——————————————————————————————————————————————————————
+   Toasts: slide-in + auto-dismiss com fade-out animado
+   —————————————————————————————————————————————————————— */
+.toast {
+  background: var(--color-accent);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius);
+  margin-bottom: 0.5rem;
+  animation: slideIn 0.3s forwards;
+
+  /* 1) Transição no estado normal */
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity var(--transition-medium),
+    transform var(--transition-medium);
+}
+
+.toast.hide {
+  /* 2) Apenas altera propriedades — a transição já está aqui */
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Certifique-se de que este bloco fique antes do @media (prefers-reduced-motion) */
+
+/* Responsive tweaks */
+@media (max-width: 1024px) {
+  .crm-root .table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .section {
+    padding: 1.5rem;
+  }
+  .chart-container {
+    height: 200px;
+  }
+}
+@media (max-width: 768px) {
+  /* reduz padding e fonte dos cabeçalhos e células para caber melhor */
+  .crm-root .table th,
+  .crm-root .table td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    white-space: nowrap; /* evita quebra indesejada de texto */
+  }
+  .charts {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .kpis,
+  .kanban {
+    grid-template-columns: 1fr;
+  }
+}
+/* ==========================================================================  
+       Gap geral entre botões de Ações (Editar / Excluir)  
+       ========================================================================== */
+.crm-root .actions,
+.crm-root .table td.actions,
+.crm-root .tasks-list li > div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fallback: se houver pares de botões fora de .actions */
+.crm-root button + button {
+  margin-top: 0.5rem;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
