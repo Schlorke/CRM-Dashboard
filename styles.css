@@ -51,7 +51,6 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  max-width: 1200px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -79,6 +78,17 @@ body {
   font-size: 1.25rem;
   color: var(--text-light);
   cursor: pointer;
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  margin: 0; /* <-- Remova a margem superior que estava empurrando */
+  align-self: center; /* <-- Alinha verticalmente no centro da nav */
+}
+
+body.dark-mode .nav__toggle-dark:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.nav__toggle-dark:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* Main Menu List (now outside <nav>) */
@@ -202,22 +212,6 @@ body.dark-mode .modal-content {
   color: var(--text-light);
 }
 
-/* Dark Mode Toggle Button */
-#dark-mode-toggle {
-  background: none;
-  border: none;
-  color: var(--text-light);
-  cursor: pointer;
-  border-radius: var(--radius);
-  transition: background var(--transition-fast);
-}
-#dark-mode-toggle:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-body.dark-mode #dark-mode-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
 /* 7) Pipeline de Oportunidades */
 body.dark-mode .kanban__column {
   background: #2a2a3c; /* fundo escuro */
@@ -267,9 +261,6 @@ body.dark-mode .kanban__card {
   .nav__list.open .nav__item.active {
     color: var(--color-accent);
   }
-  .nav__list.open .nav__toggle-dark {
-    color: var(--text-dark);
-  }
   /* larger touch area */
   .nav__item {
     padding: 1rem 1.5rem;
@@ -280,6 +271,9 @@ body.dark-mode .kanban__card {
     left: 10%;
     width: 80%;
     height: 2px;
+  }
+  .nav__toggle-dark {
+    align-self: flex-end;
   }
 }
 
@@ -587,7 +581,6 @@ body.dark-mode .kanban__card {
 /* Responsive tweaks */
 @media (max-width: 1024px) {
   .crm-root .table {
-    display: block;
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -600,12 +593,11 @@ body.dark-mode .kanban__card {
   }
 }
 @media (max-width: 768px) {
-  /* reduz padding e fonte dos cabeçalhos e células para caber melhor */
   .crm-root .table th,
   .crm-root .table td {
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
-    white-space: nowrap; /* evita quebra indesejada de texto */
+    white-space: nowrap;
   }
   .charts {
     flex-direction: column;
@@ -616,17 +608,14 @@ body.dark-mode .kanban__card {
     grid-template-columns: 1fr;
   }
 }
-/* ==========================================================================  
-       Gap geral entre botões de Ações (Editar / Excluir)  
-       ========================================================================== */
+
+/* Ações alinhadas em coluna */
 .crm-root .actions,
 .crm-root .table td.actions,
 .crm-root .tasks-list li > div {
   display: flex;
   flex-direction: column;
 }
-
-/* Fallback: se houver pares de botões fora de .actions */
 .crm-root button + button {
   margin-top: 0.5rem;
 }
