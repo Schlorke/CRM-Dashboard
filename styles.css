@@ -594,6 +594,12 @@ body.dark-mode .kanban__card {
   }
 }
 @media (max-width: 768px) {
+  .crm-root .table {
+    display: block; /* faz a table virar bloco scrollable */
+    width: 100%; /* respeita 100% da área pai */
+    overflow-x: auto; /* habilita scroll horizontal */
+    -webkit-overflow-scrolling: touch;
+  }
   .crm-root .table th,
   .crm-root .table td {
     padding: 0.5rem 0.75rem;
@@ -616,9 +622,6 @@ body.dark-mode .kanban__card {
 .crm-root .tasks-list li > div {
   display: flex;
   flex-direction: column;
-}
-.crm-root button + button {
-  margin-top: 0.5rem;
 }
 
 /* Reduce motion */
