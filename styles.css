@@ -95,7 +95,6 @@ body.dark-mode .nav__toggle-dark:hover {
 .nav__list {
   list-style: none;
   display: flex;
-  gap: 1rem;
 }
 .nav__item {
   color: var(--text-light);
@@ -247,6 +246,7 @@ body.dark-mode .kanban__card {
     border-bottom-right-radius: var(--radius);
     overflow: hidden;
     align-items: flex-start;
+    padding: 0.5rem 0;
     z-index: 999; /* under nav (1000) */
   }
   /* open state */
@@ -263,7 +263,8 @@ body.dark-mode .kanban__card {
   }
   /* larger touch area */
   .nav__item {
-    padding: 1rem 1.5rem;
+    padding: 0.5rem 1rem;
+    gap: 1rem;
   }
   /* closer underline */
   .nav__item::after {
