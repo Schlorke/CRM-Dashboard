@@ -625,14 +625,14 @@ select,
   }
 }
 @media (max-width: 768px) {
-  .crm-root .table {
+  .table {
     display: block; /* faz a table virar bloco scrollable */
     width: 100%; /* respeita 100% da área pai */
     overflow-x: auto; /* habilita scroll horizontal */
     -webkit-overflow-scrolling: touch;
   }
-  .crm-root .table th,
-  .crm-root .table td {
+   .table th,
+   .table td {
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
     white-space: nowrap;
