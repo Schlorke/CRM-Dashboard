@@ -17,6 +17,10 @@
   --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.15);
   --transition-fast: 0.2s ease-out;
   --transition-medium: 0.4s ease-out;
+
+  /* …suas outras variáveis… */
+  --control-height: 2.5rem; /* altura padrão de botão/input */
+  --control-gap: 1rem; /* espaçamento entre controles */
 }
 
 /* Reset & Base */
@@ -40,26 +44,26 @@ body {
 }
 .crm-root {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
 }
 
 /* Fixed Navbar */
 .nav {
-  position: fixed;
-  top: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
+  position: sticky;
   display: flex;
-  align-items: center;
+  top: 1rem;
+  width: 100%;
+  max-width: 1168px;
+  margin-inline: auto;
+  padding: 0.75rem 1rem;
   justify-content: space-between;
   background: linear-gradient(
     90deg,
     var(--color-primary-start),
     var(--color-primary-end)
   );
-  padding: 0.75rem 1rem;
+
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
   z-index: 1000;
@@ -126,7 +130,7 @@ body.dark-mode .nav__toggle-dark:hover {
 
 /* Offset content for fixed nav */
 .content {
-  padding-top: 4rem; /* equal to nav height + margin */
+  padding-top: 1rem; /* equal to nav height + margin */
 }
 
 /* Dark mode overrides */
@@ -223,59 +227,6 @@ body.dark-mode .kanban__card {
   background: #3a3a4e; /* cartão escuro */
   color: var(--text-light);
   border: none;
-}
-
-/* → Removido o bloco de .chart-container para NÃO alterar o fundo dos <canvas> */
-
-/* Mobile Menu at 1334px */
-@media (max-width: 1334px) {
-  /* show hamburger toggle */
-  .nav__hamburger {
-    display: block;
-  }
-  /* hide main menu by default */
-  .nav__list {
-    position: absolute;
-    top: calc(100% - 8px); /* pull up to hide nav corners */
-    left: 0;
-    right: 0;
-    display: none;
-    flex-direction: column;
-    background: #818181; /* solid white */
-    border-bottom-left-radius: var(--radius);
-    border-bottom-right-radius: var(--radius);
-    overflow: hidden;
-    align-items: flex-start;
-    padding: 0.5rem 0;
-    z-index: 999; /* under nav (1000) */
-  }
-  /* open state */
-  .nav__list.open {
-    display: flex;
-  }
-  /* contrast text when open */
-  .nav__list.open .nav__item {
-    color: var(--text-light);
-  }
-  .nav__list.open .nav__item:hover,
-  .nav__list.open .nav__item.active {
-    color: var(--color-accent);
-  }
-  /* larger touch area */
-  .nav__item {
-    padding: 0.5rem 1rem;
-    gap: 1rem;
-  }
-  /* closer underline */
-  .nav__item::after {
-    bottom: 4px;
-    left: 10%;
-    width: 80%;
-    height: 2px;
-  }
-  .nav__toggle-dark {
-    align-self: flex-end;
-  }
 }
 
 /* Table Controls (Leads/Contatos) */
@@ -407,6 +358,9 @@ body.dark-mode .kanban__card {
   border-color: var(--color-accent);
 }
 .button {
+  align-self: center;
+  justify-self: center;
+  margin: 0;
   padding: 0.6rem 1.2rem;
   background: var(--color-accent);
   color: #fff;
@@ -576,7 +530,58 @@ body.dark-mode .kanban__card {
     transform: translateX(0);
   }
 }
+/* → Removido o bloco de .chart-container para NÃO alterar o fundo dos <canvas> */
 
+/* Mobile Menu at 1334px */
+@media (max-width: 1334px) {
+  /* show hamburger toggle */
+  .nav__hamburger {
+    display: block;
+  }
+  /* hide main menu by default */
+  .nav__list {
+    position: absolute;
+    top: calc(100% - 8px); /* pull up to hide nav corners */
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    background: #818181; /* solid white */
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+    overflow: hidden;
+    align-items: flex-start;
+    padding: 0.5rem 0;
+    z-index: 999; /* under nav (1000) */
+  }
+  /* open state */
+  .nav__list.open {
+    display: flex;
+  }
+  /* contrast text when open */
+  .nav__list.open .nav__item {
+    color: var(--text-light);
+  }
+  .nav__list.open .nav__item:hover,
+  .nav__list.open .nav__item.active {
+    color: var(--color-accent);
+  }
+  /* larger touch area */
+  .nav__item {
+    padding: 0.5rem 1rem;
+    gap: 1rem;
+  }
+  /* closer underline */
+  .nav__item::after {
+    bottom: 4px;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+  }
+  .nav__toggle-dark {
+    align-self: flex-end;
+  }
+}
 /* Certifique-se de que este bloco fique antes do @media (prefers-reduced-motion) */
 
 /* Responsive tweaks */
@@ -621,7 +626,8 @@ body.dark-mode .kanban__card {
 .crm-root .table td.actions,
 .crm-root .tasks-list li > div {
   display: flex;
-  flex-direction: column;
+  flex-direction: inline-flex;
+  gap: 0.75rem; /* espaço vertical entre os botões */
 }
 
 /* Reduce motion */
@@ -630,4 +636,25 @@ body.dark-mode .kanban__card {
     animation: none !important;
     transition: none !important;
   }
+}
+/* vale para todos os elementos de formulário e botões */
+.button,
+.input,
+select,
+.nav__hamburger,
+.nav__toggle-dark {
+  height: var(--control-height);
+  line-height: var(--control-height);
+  padding: 0 1rem; /* padding lateral mantém texto confortável */
+  box-sizing: border-box; /* garante que height inclua padding */
+}
+/* Controls em tabelas, formulários, modais e ações de célula */
+.table-controls,
+.form,
+.modal-actions,
+.actions,
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--control-gap);
 }
