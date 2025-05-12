@@ -20,7 +20,7 @@
 
   /* …suas outras variáveis… */
   --control-height: 2.5rem; /* altura padrão de botão/input */
-  --control-gap: 1rem; /* espaçamento entre controles */
+  --control-gap: 0.75rem; /* espaçamento entre controles */
 }
 
 /* Reset & Base */
@@ -233,7 +233,6 @@ body.dark-mode .kanban__card {
 .table-controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
   align-items: center;
   margin-bottom: 1rem;
 }
@@ -255,6 +254,7 @@ body.dark-mode .kanban__card {
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
   transition: opacity var(--transition-fast), transform var(--transition-fast);
+  gap: var(--control-gap);
 }
 .section.active {
   display: block;
@@ -361,7 +361,6 @@ body.dark-mode .kanban__card {
   align-self: center;
   justify-self: center;
   margin: 0;
-  padding: 0.6rem 1.2rem;
   background: var(--color-accent);
   color: #fff;
   border: none;
@@ -375,11 +374,38 @@ body.dark-mode .kanban__card {
   transform: translateY(-2px);
 }
 
-/* Pagination */
+/* vale para todos os elementos de formulário e botões */
+.button,
+.input,
+select,
+.nav__hamburger,
+.nav__toggle-dark {
+  height: var(--control-height);
+  padding: 0 1rem; /* padding lateral mantém texto confortável */
+  box-sizing: border-box; /* garante que height inclua padding */
+}
+
+/* Controls em tabelas, formulários, modais e ações de célula */
+.table-controls,
+.form,
+.modal-actions,
+.actions,
 .pagination {
   display: flex;
+  flex-wrap: wrap;
+  gap: var(--control-gap);
+}
+
+/* Ações alinhadas em coluna */
+.actions,
+.table td.actions,
+.tasks-list li > div {
+  display: flex;
+  gap: var(--control-gap);
+}
+/* Pagination */
+.pagination {
   justify-content: center;
-  gap: 0.5rem;
   margin-top: 1rem;
 }
 .pagination .button {
@@ -621,40 +647,10 @@ body.dark-mode .kanban__card {
   }
 }
 
-/* Ações alinhadas em coluna */
-.crm-root .actions,
-.crm-root .table td.actions,
-.crm-root .tasks-list li > div {
-  display: flex;
-  flex-direction: inline-flex;
-  gap: 0.75rem; /* espaço vertical entre os botões */
-}
-
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
     transition: none !important;
   }
-}
-/* vale para todos os elementos de formulário e botões */
-.button,
-.input,
-select,
-.nav__hamburger,
-.nav__toggle-dark {
-  height: var(--control-height);
-  line-height: var(--control-height);
-  padding: 0 1rem; /* padding lateral mantém texto confortável */
-  box-sizing: border-box; /* garante que height inclua padding */
-}
-/* Controls em tabelas, formulários, modais e ações de célula */
-.table-controls,
-.form,
-.modal-actions,
-.actions,
-.pagination {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--control-gap);
 }
