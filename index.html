@@ -16,326 +16,343 @@
   </head>
   <body>
     <!-- NAVBAR FIXA -->
-    <nav class="crm-root nav" aria-label="Main navigation" role="navigation">
-      <!-- botão hamburger: padrão mobile-first, aria-expanded para acessibilidade -->
-      <button
-        id="hamburger"
-        class="nav__hamburger"
-        aria-label="Abrir/Fechar menu"
-        aria-expanded="false"
-      >
-        ☰
-      </button>
+    <div class="crm-root">
+      <nav class="nav" aria-label="Main navigation" role="navigation">
+        <!-- botão hamburger: padrão mobile-first, aria-expanded para acessibilidade -->
+        <button
+          id="hamburger"
+          class="nav__hamburger"
+          aria-label="Abrir/Fechar menu"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
 
-      <!-- lista de navegação: oculta por padrão em mobile -->
-      <ul class="nav__list" aria-label="Menu principal">
-        <li class="nav__item active" data-section="dashboard" tabindex="0">
-          Dashboard
-        </li>
-        <li class="nav__item" data-section="leads" tabindex="0">
-          Leads/Contatos
-        </li>
-        <li class="nav__item" data-section="pipeline" tabindex="0">Pipeline</li>
-        <li class="nav__item" data-section="tasks" tabindex="0">Tarefas</li>
-        <li class="nav__item" data-section="timeline" tabindex="0">Timeline</li>
-        <li class="nav__item" data-section="reports" tabindex="0">
-          Relatórios
-        </li>
-        <li class="nav__item" data-section="users" tabindex="0">Usuários</li>
-        <li class="nav__item" data-section="settings" tabindex="0">
-          Configurações
-        </li>
-        <li class="nav__item" data-section="integrations" tabindex="0">
-          Integrações
-        </li>
-      </ul>
+        <!-- lista de navegação: oculta por padrão em mobile -->
+        <ul class="nav__list" aria-label="Menu principal">
+          <li class="nav__item active" data-section="dashboard" tabindex="0">
+            Dashboard
+          </li>
+          <li class="nav__item" data-section="leads" tabindex="0">
+            Leads/Contatos
+          </li>
+          <li class="nav__item" data-section="pipeline" tabindex="0">
+            Pipeline
+          </li>
+          <li class="nav__item" data-section="tasks" tabindex="0">Tarefas</li>
+          <li class="nav__item" data-section="timeline" tabindex="0">
+            Timeline
+          </li>
+          <li class="nav__item" data-section="reports" tabindex="0">
+            Relatórios
+          </li>
+          <li class="nav__item" data-section="users" tabindex="0">Usuários</li>
+          <li class="nav__item" data-section="settings" tabindex="0">
+            Configurações
+          </li>
+          <li class="nav__item" data-section="integrations" tabindex="0">
+            Integrações
+          </li>
+        </ul>
 
-      <!-- Botão de modo escuro: aria-pressed para indicar estado -->
-      <button
-        id="dark-mode-toggle"
-        class="nav__toggle-dark"
-        aria-label="Alternar modo escuro"
-        aria-pressed="false"
-      >
-        🌙
-      </button>
-    </nav>
+        <!-- Botão de modo escuro: aria-pressed para indicar estado -->
+        <button
+          id="dark-mode-toggle"
+          class="nav__toggle-dark"
+          aria-label="Alternar modo escuro"
+          aria-pressed="false"
+        >
+          🌙
+        </button>
+      </nav>
 
-    <!-- CONTEÚDO PRINCIPAL (com padding-top para nav fixa) -->
-    <div class="crm-root content">
-      <main class="main" role="main">
-        <!-- 1. DASHBOARD -->
-        <section id="dashboard" class="section active">
-          <h2 class="section__title">Dashboard</h2>
-          <div class="kpis">
-            <div class="kpi-card">
-              <h3>Total de Leads</h3>
-              <p id="kpi-leads">0</p>
-            </div>
-            <div class="kpi-card">
-              <h3>Conversões</h3>
-              <p id="kpi-conversions">0</p>
-            </div>
-            <div class="kpi-card">
-              <h3>Receita (R$)</h3>
-              <p id="kpi-revenue">0,00</p>
-            </div>
-          </div>
-          <div class="charts">
-            <div class="chart-container">
-              <canvas
-                id="chart-sales"
-                aria-label="Gráfico de vendas"
-                role="img"
-              ></canvas>
-            </div>
-            <div class="chart-container">
-              <canvas
-                id="chart-funnel"
-                aria-label="Funil de vendas"
-                role="img"
-              ></canvas>
-            </div>
-          </div>
-        </section>
-
-        <!-- 2. LEADS/CONTATOS -->
-        <section id="leads" class="section" aria-labelledby="leads-title">
-          <h2 id="leads-title" class="section__title">Leads / Contatos</h2>
-          <div class="table-controls">
-            <select
-              id="leads-status-filter"
-              class="input"
-              aria-label="Filtrar por status"
-            >
-              <option value="all">Todos Status</option>
-              <option value="Novo">Novo</option>
-              <option value="Em Contato">Em Contato</option>
-              <option value="Negociação">Negociação</option>
-              <option value="Fechado">Fechado</option>
-            </select>
-            <input
-              id="leads-search"
-              class="input"
-              placeholder="Buscar..."
-              aria-label="Buscar leads"
-            />
-            <button id="bulk-delete-leads" class="button">
-              Excluir Selecionados
-            </button>
-            <button id="add-lead-btn" class="button">Novo Lead</button>
-            <button id="import-csv" class="button">Importar CSV</button>
-            <button id="export-csv" class="button">Exportar CSV</button>
-          </div>
-          <table id="leads-table" class="table" aria-describedby="leads-desc">
-            <caption id="leads-desc" class="sr-only">
-              Tabela de leads com opção de seleção e ações
-            </caption>
-            <thead>
-              <tr>
-                <th>
-                  <input
-                    type="checkbox"
-                    id="select-all-leads"
-                    aria-label="Selecionar todos os leads"
-                  />
-                </th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Telefone</th>
-                <th>Status</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- renderizado via JS -->
-            </tbody>
-          </table>
-          <div
-            id="leads-pag"
-            class="pagination"
-            aria-label="Paginação de leads"
-          ></div>
-        </section>
-
-        <!-- 3. PIPELINE -->
-        <section id="pipeline" class="section" aria-labelledby="pipeline-title">
-          <h2 id="pipeline-title" class="section__title">
-            Pipeline de Oportunidades
-          </h2>
-          <div class="pipeline-controls">
-            <button id="add-opportunity-btn" class="button">
-              Nova Oportunidade
-            </button>
-          </div>
-          <div class="kanban">
-            <div class="kanban__column" data-stage="novo">
-              <h3>Novos</h3>
-              <div class="kanban__cards"></div>
-            </div>
-            <div class="kanban__column" data-stage="contato">
-              <h3>Em Contato</h3>
-              <div class="kanban__cards"></div>
-            </div>
-            <div class="kanban__column" data-stage="negociacao">
-              <h3>Negociação</h3>
-              <div class="kanban__cards"></div>
-            </div>
-            <div class="kanban__column" data-stage="fechado">
-              <h3>Fechados</h3>
-              <div class="kanban__cards"></div>
-            </div>
-          </div>
-
-          <!-- Modal de Oportunidade -->
-          <div
-            id="modal-opportunity"
-            class="modal hidden"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modal-title"
-          >
-            <div class="modal-content">
-              <h3 id="modal-title">Nova Oportunidade</h3>
-              <label>
-                Nome:
-                <input type="text" id="opp-name" />
-              </label>
-              <label>
-                Valor (R$):
-                <input type="number" id="opp-value" min="0" />
-              </label>
-              <label>
-                Estágio:
-                <select id="opp-stage">
-                  <option value="novo">Novo</option>
-                  <option value="contato">Em Contato</option>
-                  <option value="negociacao">Negociação</option>
-                  <option value="fechado">Fechado</option>
-                </select>
-              </label>
-              <div class="modal-actions">
-                <button id="save-opp" class="button">Salvar</button>
-                <button id="cancel-opp" class="button">Cancelar</button>
+      <!-- CONTEÚDO PRINCIPAL (com padding-top para nav fixa) -->
+      <div class="content">
+        <main class="main" role="main">
+          <!-- 1. DASHBOARD -->
+          <section id="dashboard" class="section active">
+            <h2 class="section__title">Dashboard</h2>
+            <div class="kpis">
+              <div class="kpi-card">
+                <h3>Total de Leads</h3>
+                <p id="kpi-leads">0</p>
+              </div>
+              <div class="kpi-card">
+                <h3>Conversões</h3>
+                <p id="kpi-conversions">0</p>
+              </div>
+              <div class="kpi-card">
+                <h3>Receita (R$)</h3>
+                <p id="kpi-revenue">0,00</p>
               </div>
             </div>
-          </div>
-        </section>
+            <div class="charts">
+              <div class="chart-container">
+                <canvas
+                  id="chart-sales"
+                  aria-label="Gráfico de vendas"
+                  role="img"
+                ></canvas>
+              </div>
+              <div class="chart-container">
+                <canvas
+                  id="chart-funnel"
+                  aria-label="Funil de vendas"
+                  role="img"
+                ></canvas>
+              </div>
+            </div>
+          </section>
 
-        <!-- 4. TAREFAS -->
-        <section id="tasks" class="section" aria-labelledby="tasks-title">
-          <h2 id="tasks-title" class="section__title">Tarefas / Agenda</h2>
-          <button id="add-task-btn" class="button">Nova Tarefa</button>
-          <ul id="tasks-list" class="tasks-list"></ul>
-        </section>
+          <!-- 2. LEADS/CONTATOS -->
+          <section id="leads" class="section" aria-labelledby="leads-title">
+            <h2 id="leads-title" class="section__title">Leads / Contatos</h2>
+            <div class="table-controls">
+              <select
+                id="leads-status-filter"
+                class="input"
+                aria-label="Filtrar por status"
+              >
+                <option value="all">Todos Status</option>
+                <option value="Novo">Novo</option>
+                <option value="Em Contato">Em Contato</option>
+                <option value="Negociação">Negociação</option>
+                <option value="Fechado">Fechado</option>
+              </select>
+              <input
+                id="leads-search"
+                class="input"
+                placeholder="Buscar..."
+                aria-label="Buscar leads"
+              />
+              <button id="bulk-delete-leads" class="button">
+                Excluir Selecionados
+              </button>
+              <button id="add-lead-btn" class="button">Novo Lead</button>
+              <button id="import-csv" class="button">Importar CSV</button>
+              <button id="export-csv" class="button">Exportar CSV</button>
+            </div>
+            <table id="leads-table" class="table" aria-describedby="leads-desc">
+              <caption id="leads-desc" class="sr-only">
+                Tabela de leads com opção de seleção e ações
+              </caption>
+              <thead>
+                <tr>
+                  <th>
+                    <input
+                      type="checkbox"
+                      id="select-all-leads"
+                      aria-label="Selecionar todos os leads"
+                    />
+                  </th>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>Telefone</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- renderizado via JS -->
+              </tbody>
+            </table>
+            <div
+              id="leads-pag"
+              class="pagination"
+              aria-label="Paginação de leads"
+            ></div>
+          </section>
 
-        <!-- 5. TIMELINE -->
-        <section id="timeline" class="section" aria-labelledby="timeline-title">
-          <h2 id="timeline-title" class="section__title">
-            Timeline de Atividades
-          </h2>
-          <select
-            id="timeline-filter"
-            class="input"
-            aria-label="Filtrar eventos"
+          <!-- 3. PIPELINE -->
+          <section
+            id="pipeline"
+            class="section"
+            aria-labelledby="pipeline-title"
           >
-            <option value="all">Todas</option>
-            <option value="lead">Lead</option>
-            <option value="opportunity">Oportunidade</option>
-            <option value="task">Tarefa</option>
-            <option value="config">Configuração</option>
-          </select>
-          <ul id="activity-list" class="timeline-list"></ul>
-        </section>
+            <h2 id="pipeline-title" class="section__title">
+              Pipeline de Oportunidades
+            </h2>
+            <div class="pipeline-controls">
+              <button id="add-opportunity-btn" class="button">
+                Nova Oportunidade
+              </button>
+            </div>
+            <div class="kanban">
+              <div class="kanban__column" data-stage="novo">
+                <h3>Novos</h3>
+                <div class="kanban__cards"></div>
+              </div>
+              <div class="kanban__column" data-stage="contato">
+                <h3>Em Contato</h3>
+                <div class="kanban__cards"></div>
+              </div>
+              <div class="kanban__column" data-stage="negociacao">
+                <h3>Negociação</h3>
+                <div class="kanban__cards"></div>
+              </div>
+              <div class="kanban__column" data-stage="fechado">
+                <h3>Fechados</h3>
+                <div class="kanban__cards"></div>
+              </div>
+            </div>
 
-        <!-- 6. RELATÓRIOS -->
-        <section id="reports" class="section" aria-labelledby="reports-title">
-          <h2 id="reports-title" class="section__title">Relatórios</h2>
-          <button id="export-csv-report" class="button">Exportar CSV</button>
-          <button id="export-xls" class="button">Exportar XLS</button>
-          <table id="report-table" class="table"></table>
-        </section>
+            <!-- Modal de Oportunidade -->
+            <div
+              id="modal-opportunity"
+              class="modal hidden"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-title"
+            >
+              <div class="modal-content">
+                <h3 id="modal-title">Nova Oportunidade</h3>
+                <label>
+                  Nome:
+                  <input type="text" id="opp-name" />
+                </label>
+                <label>
+                  Valor (R$):
+                  <input type="number" id="opp-value" min="0" />
+                </label>
+                <label>
+                  Estágio:
+                  <select id="opp-stage">
+                    <option value="novo">Novo</option>
+                    <option value="contato">Em Contato</option>
+                    <option value="negociacao">Negociação</option>
+                    <option value="fechado">Fechado</option>
+                  </select>
+                </label>
+                <div class="modal-actions">
+                  <button id="save-opp" class="button">Salvar</button>
+                  <button id="cancel-opp" class="button">Cancelar</button>
+                </div>
+              </div>
+            </div>
+          </section>
 
-        <!-- 7. USUÁRIOS -->
-        <section id="users" class="section" aria-labelledby="users-title">
-          <h2 id="users-title" class="section__title">Gestão de Usuários</h2>
-          <button id="add-user-btn" class="button">Novo Usuário</button>
-          <table id="users-table" class="table">
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Perfil</th>
-                <th>Status</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </section>
+          <!-- 4. TAREFAS -->
+          <section id="tasks" class="section" aria-labelledby="tasks-title">
+            <h2 id="tasks-title" class="section__title">Tarefas / Agenda</h2>
+            <button id="add-task-btn" class="button">Nova Tarefa</button>
+            <ul id="tasks-list" class="tasks-list"></ul>
+          </section>
 
-        <!-- 8. CONFIGURAÇÕES -->
-        <section id="settings" class="section" aria-labelledby="settings-title">
-          <h2 id="settings-title" class="section__title">
-            Configurações Gerais
-          </h2>
-          <form id="settings-form" class="form">
-            <label>
-              Moeda:
-              <select name="currency" class="input">
-                <option value="BRL">BRL</option>
-                <option value="USD">USD</option>
-              </select>
-            </label>
-            <label>
-              Fuso horário:
-              <input
-                type="text"
-                name="timezone"
-                class="input"
-                placeholder="America/Sao_Paulo"
-              />
-            </label>
-            <label>
-              Branding:
-              <input
-                type="text"
-                name="branding"
-                class="input"
-                placeholder="Nome da Empresa"
-              />
-            </label>
-            <label>
-              Meu Perfil:
-              <select name="role" class="input">
-                <option value="Admin">Admin</option>
-                <option value="Vendedor">Vendedor</option>
-                <option value="Leitura">Leitura</option>
-              </select>
-            </label>
-            <button type="submit" class="button">Salvar</button>
-          </form>
-        </section>
+          <!-- 5. TIMELINE -->
+          <section
+            id="timeline"
+            class="section"
+            aria-labelledby="timeline-title"
+          >
+            <h2 id="timeline-title" class="section__title">
+              Timeline de Atividades
+            </h2>
+            <select
+              id="timeline-filter"
+              class="input"
+              aria-label="Filtrar eventos"
+            >
+              <option value="all">Todas</option>
+              <option value="lead">Lead</option>
+              <option value="opportunity">Oportunidade</option>
+              <option value="task">Tarefa</option>
+              <option value="config">Configuração</option>
+            </select>
+            <ul id="activity-list" class="timeline-list"></ul>
+          </section>
 
-        <!-- 9. INTEGRAÇÕES -->
-        <section
-          id="integrations"
-          class="section"
-          aria-labelledby="integrations-title"
-        >
-          <h2 id="integrations-title" class="section__title">
-            Integrações (stub)
-          </h2>
-          <select id="integration-select" class="input">
-            <option value="Salesforce">Salesforce</option>
-            <option value="GoogleCalendar">Google Calendar</option>
-            <option value="Slack">Slack</option>
-          </select>
-          <button id="call-integration" class="button">
-            Chamar Integração
-          </button>
-        </section>
-      </main>
+          <!-- 6. RELATÓRIOS -->
+          <section id="reports" class="section" aria-labelledby="reports-title">
+            <h2 id="reports-title" class="section__title">Relatórios</h2>
+            <button id="export-csv-report" class="button">Exportar CSV</button>
+            <button id="export-xls" class="button">Exportar XLS</button>
+            <table id="report-table" class="table"></table>
+          </section>
 
+          <!-- 7. USUÁRIOS -->
+          <section id="users" class="section" aria-labelledby="users-title">
+            <h2 id="users-title" class="section__title">Gestão de Usuários</h2>
+            <button id="add-user-btn" class="button">Novo Usuário</button>
+            <table id="users-table" class="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Perfil</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </section>
+
+          <!-- 8. CONFIGURAÇÕES -->
+          <section
+            id="settings"
+            class="section"
+            aria-labelledby="settings-title"
+          >
+            <h2 id="settings-title" class="section__title">
+              Configurações Gerais
+            </h2>
+            <form id="settings-form" class="form">
+              <label>
+                Moeda:
+                <select name="currency" class="input">
+                  <option value="BRL">BRL</option>
+                  <option value="USD">USD</option>
+                </select>
+              </label>
+              <label>
+                Fuso horário:
+                <input
+                  type="text"
+                  name="timezone"
+                  class="input"
+                  placeholder="America/Sao_Paulo"
+                />
+              </label>
+              <label>
+                Branding:
+                <input
+                  type="text"
+                  name="branding"
+                  class="input"
+                  placeholder="Nome da Empresa"
+                />
+              </label>
+              <label>
+                Meu Perfil:
+                <select name="role" class="input">
+                  <option value="Admin">Admin</option>
+                  <option value="Vendedor">Vendedor</option>
+                  <option value="Leitura">Leitura</option>
+                </select>
+              </label>
+              <button type="submit" class="button">Salvar</button>
+            </form>
+          </section>
+
+          <!-- 9. INTEGRAÇÕES -->
+          <section
+            id="integrations"
+            class="section"
+            aria-labelledby="integrations-title"
+          >
+            <h2 id="integrations-title" class="section__title">
+              Integrações (stub)
+            </h2>
+            <select id="integration-select" class="input">
+              <option value="Salesforce">Salesforce</option>
+              <option value="GoogleCalendar">Google Calendar</option>
+              <option value="Slack">Slack</option>
+            </select>
+            <button id="call-integration" class="button">
+              Chamar Integração
+            </button>
+          </section>
+        </main>
+      </div>
       <!-- Toast Container -->
       <div id="toast-container" class="toast-container"></div>
     </div>
