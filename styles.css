@@ -237,14 +237,6 @@ body.dark-mode .kanban__card {
   margin-bottom: 1rem;
 }
 
-/* Form Controls (Configurações) */
-.form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  align-items: center;
-}
-
 /* Sections */
 .section {
   display: none;
@@ -335,6 +327,7 @@ body.dark-mode .kanban__card {
   padding: 0.75rem 1rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  gap: var(--control-gap);
 }
 .table th {
   background: #f1f1f1;
@@ -344,6 +337,21 @@ body.dark-mode .kanban__card {
 }
 .table tr:hover td {
   background: #f9f9f9;
+}
+
+/* Controls em tabelas, formulários, modais e ações de célula */
+/* Ações alinhadas em coluna */
+.table-controls,
+.form,
+.modal-actions,
+.pagination,
+.actions,
+.table td.actions {
+  width: 100%;
+  align-items: center;
+  flex-wrap: wrap;
+  display: flex;
+  gap: var(--control-gap);
 }
 
 /* Inputs & Buttons */
@@ -358,8 +366,6 @@ body.dark-mode .kanban__card {
   border-color: var(--color-accent);
 }
 .button {
-  align-self: center;
-  justify-self: center;
   margin: 0;
   background: var(--color-accent);
   color: #fff;
@@ -385,24 +391,16 @@ select,
   box-sizing: border-box; /* garante que height inclua padding */
 }
 
-/* Controls em tabelas, formulários, modais e ações de célula */
-.table-controls,
-.form,
-.modal-actions,
-.actions,
-.pagination {
-  display: flex;
+.tasks-list li > div {
+  width: 100%;
+  max-width: 253.91px;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+  display: flex;
   gap: var(--control-gap);
 }
 
-/* Ações alinhadas em coluna */
-.actions,
-.table td.actions,
-.tasks-list li > div {
-  display: flex;
-  gap: var(--control-gap);
-}
 /* Pagination */
 .pagination {
   justify-content: center;
@@ -476,8 +474,7 @@ select,
 /* Reports */
 .report-controls {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: var(--control-gap);
 }
 
 /* Modal */
@@ -594,16 +591,26 @@ select,
   }
   /* larger touch area */
   .nav__item {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2rem;
     gap: 1rem;
   }
   /* closer underline */
   .nav__item::after {
-    bottom: 4px;
-    left: 10%;
-    width: 80%;
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    width: 70%;
     height: 2px;
+    bottom: 0;
+    margin-inline: 2rem;
+    align-self: flex-start;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--transition-fast);
+    background: var(--color-accent);
   }
+
   .nav__toggle-dark {
     align-self: flex-end;
   }
@@ -631,8 +638,8 @@ select,
     overflow-x: auto; /* habilita scroll horizontal */
     -webkit-overflow-scrolling: touch;
   }
-   .table th,
-   .table td {
+  .table th,
+  .table td {
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
     white-space: nowrap;
